@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    FlatList,
-    SafeAreaView,
-    StyleSheet,
-    Keyboard
-} from 'react-native'
+import { FlatList, Keyboard } from 'react-native'
 import Login from '../Login'
 import TaskList from '../TaskList'
 import firebase from '../../services/firebaseConnection'
 import IconFeather from 'react-native-vector-icons/Feather'
+import {
+	Container,
+	ContainerTask,
+	InputText,
+	ButtonAddTask,
+	CancelContentEdit,
+	ButtonCancelEditing,
+	TextCancelEditing
+} from './styles'
 
 export default function CreateAccount() {
     const [user, setUser] = useState(null)
@@ -120,31 +120,30 @@ export default function CreateAccount() {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <Container>
             {key.length > 0 && (
-                <View style={{ flexDirection: 'row', marginBottom: 15 }} >
-                    <TouchableOpacity onPress={cancelEdit}>
+                <CancelContentEdit>
+                    <ButtonCancelEditing onPress={cancelEdit}>
                         <IconFeather name='x-circle' color='#ff0000' size={22} />
-                    </TouchableOpacity>
-                    <Text style={{ marginLeft: 5, color: '#ff0000' }}>
+                    </ButtonCancelEditing>
+                    <TextCancelEditing>
                         Você está editando uma tarefa!
-                    </Text>
-                </View>
+                    </TextCancelEditing>
+                </CancelContentEdit>
             )}
 
-            <View style={styles.containerTask}>
-                <TextInput
-                    style={styles.inputText}
+            <ContainerTask>
+                <InputText
                     placeholder='Crie uma nova tarefa'
                     value={newTask}
                     onChangeText={(item) => setNewTask(item)}
                     ref={inputRef}
                 />
 
-                <TouchableOpacity style={styles.buttonAdd} onPress={handleAddTask}>
-                    <Text style={styles.textAdd}>+</Text>
-                </TouchableOpacity>
-            </View>
+                <ButtonAddTask onPress={handleAddTask}>
+                    <IconFeather name='plus' color='#FFFFFF' size={22} />
+                </ButtonAddTask>
+            </ContainerTask>
 
             <FlatList
                 data={tasks}
@@ -158,36 +157,6 @@ export default function CreateAccount() {
                 )}
             />
 
-        </SafeAreaView>
+        </Container>
     )
 }
-
-const styles = StyleSheet.create({
-    containerTask: {
-        flexDirection: 'row',
-    },
-    inputText: {
-        flex: 1,
-        marginBottom: 25,
-        padding: 10,
-        backgroundColor: '#ffffff',
-        borderRadius: 6,
-        height: 60,
-        color: '#000000',
-        fontSize: 16
-    },
-    buttonAdd: {
-        backgroundColor: '#0a9396',
-        height: 60,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: 5,
-        paddingHorizontal: 15,
-        borderRadius: 6
-    },
-    textAdd: {
-        color: '#ffffff',
-        fontSize: 22,
-        fontWeight: 'bold'
-    }
-})
