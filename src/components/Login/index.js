@@ -1,14 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, createElement } from 'react'
 import firebase from '../../services/firebaseConnection'
-import {
-	Container,
-	InputText,
-	ButtonLogin,
-	ButtonCreateLogin,
-	TextLogin,
-	TextCreateLogin,
-	TextLoginOrCreateAccount
-} from './styles'
+import LoginScreen from './view'
 
 export default function Login({ changeStatus }) {
   const [type, setType] = useState('login')
@@ -36,34 +28,14 @@ export default function Login({ changeStatus }) {
 		setType(type => type === 'login' ? 'cadastrar' : 'login')
 	}
 
-  return (
-    <Container>
-      <InputText
-        placeholder='Email'
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
+	const viewProps = {
+		loginOrCreateAccount,
+		handleLogin,
+		type,
+		setType,
+		setEmail,
+		setPassword
+	}
 
-      <InputText
-        placeholder='********'
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-
-      <ButtonLogin onPress={handleLogin}>
-        <TextLogin>
-          {type === 'login' ? 'Acessar' : 'Cadastrar'}
-        </TextLogin>
-      </ButtonLogin>
-
-      <ButtonCreateLogin onPress={loginOrCreateAccount}>
-        <TextLoginOrCreateAccount>
-					{type === 'login' ? 'Ainda não tem conta?' : 'Já possui uma conta?'}
-				</TextLoginOrCreateAccount>
-      	<TextCreateLogin>
-        	{type === 'login' ? 'Criar conta' : 'Entrar'}
-      	</TextCreateLogin>
-      </ButtonCreateLogin>
-    </Container>
-  )
+	return createElement(LoginScreen, viewProps)
 }

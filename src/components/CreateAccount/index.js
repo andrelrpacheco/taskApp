@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FlatList, Keyboard } from 'react-native'
-import Login from '../Login'
+import Login from '../Login/'
 import TaskList from '../TaskList'
 import firebase from '../../services/firebaseConnection'
 import IconFeather from 'react-native-vector-icons/Feather'
