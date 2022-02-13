@@ -25,11 +25,13 @@ export default function LoginScreen(props) {
       <InputText
         placeholder='Email'
         value={email}
+				keyboardType='email-address'
         onChangeText={(text) => setEmail(text)}
       />
 
       <InputText
         placeholder='********'
+				secureTextEntry
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
